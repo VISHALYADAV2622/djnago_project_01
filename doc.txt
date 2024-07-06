@@ -1,0 +1,64 @@
+Create a django project 
+
+1- create a project -djnago admin startproject first_project
+2-create a app - python manage.py startapp demo1
+3-install app in first_project>setting.py 
+          """
+           INSTALLED_APPS = [
+              'demo1',
+           ]
+           """
+4-create a urls for demo1 in first_project urls 
+     .include() adds urls from your app directory's urls.py to the main urls.py (in memory).
+      This keeps the main urls.py from getting too big to read. 
+
+      """
+     urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('demo1/',include('demo1.urls'))
+
+]
+5-create home function in views.py into demo1 
+   """
+   from django.http import httpResponse
+    
+   def home(request):
+       return httpResponse("hello django")
+  """
+6- add urls in demo1 to called home function and show web page 
+    
+    """
+    form .import views
+    urlpatterns = [
+    path("home/",views.home,name="home"),
+    path("about/",views.about,name="about"), 
+
+]
+""""
+7- create a template folder in first_project and add template in setting.py
+          
+          """
+          TEMPLATES=[
+               'DIRS': [BASE_DIR,"templates"],
+          ]
+          """
+8-create a home.html in template folder
+   
+9-create a function to return a home.html in web page 
+    """
+    from django.shortcuts import render 
+      def home(request):
+      return render (request,'home.html')
+     """
+test endpoint 
+http://localhost:8000/demo1/home/
+
+
+10- send data about.html from views 
+      .create a directory and send data into html page 
+    """
+    def about(request):
+    data= {
+        'page':'about_page'
+    }
+    return render (request, "about.html",data)
